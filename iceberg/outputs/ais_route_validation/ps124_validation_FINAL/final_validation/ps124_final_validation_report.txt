@@ -1,0 +1,65 @@
+POLARGUARD PS124 HISTORICAL VALIDATION REPORT
+======================================================================
+
+Validation source:
+Historical RV Polarstern PS124 AIS trajectory with historical PolarGuard sea-ice, uncertainty, iceberg and vessel-constrained routing.
+
+Successful cases: 3/3
+Mean modeled route-distance reduction: 39.39%
+Reduction range: 23.51% - 48.45%
+Mean AIS-to-PolarGuard geometric deviation: 17.33 km
+
+HORIZON RESULTS
+----------------------------------------------------------------------
+
+24H
+Initialization: 2021-02-28
+AIS distance: 173.18 km
+PolarGuard distance: 132.46 km
+Distance reduction: 23.51%
+Mean route deviation: 9.16 km
+AIS mean SIC: 71.30%
+PolarGuard mean SIC: 72.14%
+AIS mean combined risk: 0.2946
+PolarGuard mean combined risk: 0.2958
+AIS minimum iceberg distance: 260.72 km
+PolarGuard minimum iceberg distance: 255.79 km
+Interpretation: 24h route completed successfully; PolarGuard route was 23.5% shorter; mean geometric deviation was 9.2 km; mean SIC remained similar (71.3% AIS vs 72.1% PolarGuard); modeled combined risk was comparable; minimum iceberg clearance was 260.7 km AIS vs 255.8 km PolarGuard.
+
+48H
+Initialization: 2021-02-27
+AIS distance: 265.69 km
+PolarGuard distance: 142.92 km
+Distance reduction: 46.21%
+Mean route deviation: 11.44 km
+AIS mean SIC: 70.06%
+PolarGuard mean SIC: 70.76%
+AIS mean combined risk: 0.3045
+PolarGuard mean combined risk: 0.3060
+AIS minimum iceberg distance: 249.28 km
+PolarGuard minimum iceberg distance: 255.79 km
+Interpretation: 48h route completed successfully; PolarGuard route was 46.2% shorter; mean geometric deviation was 11.4 km; mean SIC remained similar (70.1% AIS vs 70.8% PolarGuard); modeled combined risk was comparable; minimum iceberg clearance was 249.3 km AIS vs 255.8 km PolarGuard.
+
+72H
+Initialization: 2021-03-06
+AIS distance: 580.26 km
+PolarGuard distance: 299.12 km
+Distance reduction: 48.45%
+Mean route deviation: 31.37 km
+AIS mean SIC: 56.64%
+PolarGuard mean SIC: 46.23%
+AIS mean combined risk: 0.2859
+PolarGuard mean combined risk: 0.2413
+AIS minimum iceberg distance: 86.32 km
+PolarGuard minimum iceberg distance: 123.04 km
+Interpretation: 72h route completed successfully; PolarGuard route was 48.5% shorter; mean geometric deviation was 31.4 km; mean SIC decreased from 56.6% to 46.2%; modeled combined risk was lower; minimum iceberg clearance was 86.3 km AIS vs 123.0 km PolarGuard.
+
+======================================================================
+INTERPRETATION LIMITATION
+======================================================================
+
+These results compare PolarGuard-generated feasible routes with recorded historical AIS trajectories between matched start and destination locations.
+A shorter modeled route should not be interpreted as proof that the historical vessel route was incorrect or inefficient.
+The real Polarstern trajectory may include scientific operations, station keeping, maneuvering requirements, weather information, operational decisions, and other constraints not represented by this prototype.
+
+The validation demonstrates end-to-end historical route generation and comparison under PolarGuard's modeled sea-ice, uncertainty, iceberg, and vessel constraint framework.

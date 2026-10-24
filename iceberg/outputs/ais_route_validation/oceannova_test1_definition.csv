@@ -1,0 +1,2 @@
+test_name,initialization_date,start_timestamp,end_timestamp,start_latitude,start_longitude,destination_latitude,destination_longitude,ais_points,actual_route_distance_km,direct_distance_km,geometric_efficiency_pct
+oceannova_southbound_test1,2024-11-29,2024-11-29 00:00:00+00:00,2024-12-02 23:53:02+00:00,-55.20789333333333,-66.314165,-62.50176166666667,-59.28506166666666,212,1243.427352849704,904.9990510586518,72.7826236880315

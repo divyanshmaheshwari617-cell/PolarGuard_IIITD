@@ -1,0 +1,4 @@
+horizon_hours,success,reason,actual_ais_distance_km,polarguard_distance_km,distance_difference_km,distance_difference_pct,route_cells,iceberg_hazards,accumulated_cost,route_file
+24,False,Destination cell is blocked.,,,,,,,,
+48,True,,605.2362957010683,330.35177430285273,-274.8845213982156,-45.41771921986377,15.0,37.0,330.35177430285273,D:\PolarGuard_SeaIce\PolarGuard_SeaIce\iceberg\outputs\ais_route_validation\polarguard_results\polarguard_route_48h.csv
+72,True,,1022.4706510351276,785.9563951399315,-236.51425589519613,-23.1316425225266,32.0,37.0,957.0849720411607,D:\PolarGuard_SeaIce\PolarGuard_SeaIce\iceberg\outputs\ais_route_validation\polarguard_results\polarguard_route_72h.csv
