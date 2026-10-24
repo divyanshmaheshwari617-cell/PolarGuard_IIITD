@@ -2494,9 +2494,7 @@ def calculate_historical_accuracy(
         return
 
 
-    current = ds.values[
-        current_index
-    ]
+    current = ds.isel(time=current_index).values
 
     results = []
 
@@ -2507,10 +2505,7 @@ def calculate_historical_accuracy(
         ("72h", 3)
     ]:
 
-        actual = ds.values[
-            current_index + offset
-        ]
-
+        actual = ds.isel(time=current_index + offset).values
         prediction = forecasts[
             horizon
         ]
