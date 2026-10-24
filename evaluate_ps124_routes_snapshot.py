@@ -4,7 +4,7 @@ No training, model loading, routing or overwriting of existing results.
 Not unseen validation: 2021 overlaps the stated model training period.
 Snapshot conditions do not represent conditions throughout vessel transit.
 """
-from pathlib import Path
+from pathlib import path
 from datetime import datetime, timezone
 import argparse
 import hashlib
