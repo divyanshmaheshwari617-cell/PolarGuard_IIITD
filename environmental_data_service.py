@@ -619,6 +619,7 @@ def refresh_latest_ecmwf_wind():
         client.retrieve(
             type="fc",
             step=0,
+            area="-60/-57/-75/1",
             param=[
                 "10u",
                 "10v",
