@@ -19,3 +19,4 @@ uvicorn
 pydantic
 beautifulsoup4
 huggingface_hub
+ecmwf-opendata
