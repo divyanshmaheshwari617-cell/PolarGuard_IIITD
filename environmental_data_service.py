@@ -1,4 +1,4 @@
-
+import sys
 """
 PolarGuard Environmental Data Service
 ======================================
@@ -738,12 +738,7 @@ def load_near_real_time_wind(
         / "ecmwf_wind_bridge.py"
     )
 
-    grib_python = (
-    project_root.parent
-    / "venv_grib"
-    / "Scripts"
-    / "python.exe"
-)
+    grib_python = Path(sys.executable)
 
     if not bridge_script.exists():
         raise FileNotFoundError(
