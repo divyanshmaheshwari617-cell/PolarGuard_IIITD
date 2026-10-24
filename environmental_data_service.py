@@ -912,13 +912,8 @@ def load_near_real_time_ocean_current(
     )
 
     # venv_grib was created one directory above
-    # the main PolarGuard project directory.
-    grib_python = (
-        project_root.parent
-        / "venv_grib"
-        / "Scripts"
-        / "python.exe"
-    )
+        # Use the Python environment running this app.
+    grib_python = Path(sys.executable)
 
     if not bridge_script.exists():
         raise FileNotFoundError(
