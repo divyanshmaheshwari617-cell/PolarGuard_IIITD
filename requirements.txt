@@ -22,3 +22,4 @@ huggingface_hub
 ecmwf-opendata
 cfgrib
 eccodes
+copernicusmarine
