@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        PolarGuard | Antarctic Navigation Intelligence
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/cesium@1.121/Build/Cesium/Widgets/widgets.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div id="appShell">
+
+
+    <!-- =======================================================
+         LEFT SIDEBAR
+    ======================================================== -->
+
+    <aside id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="fa-solid fa-satellite"></i>
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    POLARGUARD
+                </div>
+
+                <div class="brand-subtitle">
+                    Antarctic Intelligence
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav id="mainNav">
+
+            <button
+                class="nav-btn active"
+                data-page="dashboard"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="seaIce"
+            >
+                <i class="fa-solid fa-snowflake"></i>
+                <span>Sea Ice</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="iceberg"
+            >
+                <i class="fa-solid fa-mountain"></i>
+                <span>Iceberg</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="risk"
+            >
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Risk & Hazards</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="routing"
+            >
+                <i class="fa-solid fa-route"></i>
+                <span>Safe Routing</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="mission"
+            >
+                <i class="fa-solid fa-crosshairs"></i>
+                <span>Integrated Mission</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-page="operations"
+            >
+                <i class="fa-solid fa-earth-americas"></i>
+                <span>3D Operations</span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="status-row">
+
+                <span
+                    id="apiDot"
+                    class="status-dot offline"
+                ></span>
+
+                <span id="apiStatus">
+                    API Offline
+                </span>
+
+            </div>
+
+
+            <div class="prototype-label">
+                SIH Research Prototype
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =======================================================
+         MAIN AREA
+    ======================================================== -->
+
+    <main id="mainArea">
+
+
+        <!-- HEADER -->
+
+        <header id="topbar">
+
+            <div>
+
+                <h1 id="pageTitle">
+                    Mission Dashboard
+                </h1>
+
+                <p id="pageSubtitle">
+                    Antarctic sea-ice, iceberg and navigation decision support
+                </p>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="model-badge">
+                    <span>Sea Ice</span>
+                    <strong>Hybrid v1</strong>
+                </div>
+
+                <div class="model-badge">
+                    <span>Iceberg</span>
+                    <strong>Environment v1</strong>
+                </div>
+
+                <button
+                    id="checkApiBtn"
+                    class="secondary-btn"
+                >
+                    <i class="fa-solid fa-plug"></i>
+                    Check API
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ===================================================
+             DASHBOARD PAGE
+        ==================================================== -->
+
+        <section
+            id="page-dashboard"
+            class="page active"
+        >
+
+
+            <div class="hero-card">
+
+                <div>
+
+                    <div class="eyebrow">
+                        ANTARCTIC MARITIME AI
+                    </div>
+
+                    <h2>
+                        Predict. Assess. Navigate.
+                    </h2>
+
+                    <p>
+                        PolarGuard combines sea-ice forecasting,
+                        iceberg trajectory prediction, uncertainty-aware
+                        hazard analysis and vessel-specific route planning.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    data-open-page="mission"
+                >
+                    <i class="fa-solid fa-play"></i>
+                    Run Integrated Mission
+                </button>
+
+            </div>
+
+
+
+            <div class="metric-grid">
+
+                <div class="metric-card">
+
+                    <div class="metric-icon blue">
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>
+
+                    <div class="metric-label">
+                        Sea-Ice Forecasts
+                    </div>
+
+                    <div class="metric-value">
+                        24 / 48 / 72h
+                    </div>
+
+                    <div class="metric-note">
+                        Hybrid frozen model
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon cyan">
+                        <i class="fa-solid fa-mountain"></i>
+                    </div>
+
+                    <div class="metric-label">
+                        Iceberg Forecasts
+                    </div>
+
+                    <div class="metric-value">
+                        3.74 km
+                    </div>
+
+                    <div class="metric-note">
+                        Held-out 24h RMSE
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon amber">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <div class="metric-label">
+                        Hazard Intelligence
+                    </div>
+
+                    <div class="metric-value">
+                        Multi-factor
+                    </div>
+
+                    <div class="metric-note">
+                        SIC + iceberg + uncertainty
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card">
+
+                    <div class="metric-icon green">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+
+                    <div class="metric-label">
+                        Navigation
+                    </div>
+
+                    <div class="metric-value">
+                        A*
+                    </div>
+
+                    <div class="metric-note">
+                        Vessel-aware route planning
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="two-column">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                System Architecture
+                            </h3>
+
+                            <p>
+                                Frozen ML → decision-support pipeline
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="pipeline">
+
+                        <div class="pipeline-node">
+                            <i class="fa-solid fa-satellite"></i>
+                            <span>Observation</span>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-node">
+                            <i class="fa-solid fa-snowflake"></i>
+                            <span>Sea Ice</span>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-node">
+                            <i class="fa-solid fa-mountain"></i>
+                            <span>Iceberg</span>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-node">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Risk</span>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            →
+                        </div>
+
+                        <div class="pipeline-node">
+                            <i class="fa-solid fa-route"></i>
+                            <span>Route</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Operational Status
+                            </h3>
+
+                            <p>
+                                Current interface state
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="dashboardStatus">
+
+                        <div class="status-item">
+                            <span>FastAPI Backend</span>
+                            <strong id="dashApiStatus">
+                                Checking...
+                            </strong>
+                        </div>
+
+                        <div class="status-item">
+                            <span>Sea-Ice Model</span>
+                            <strong>
+                                Frozen
+                            </strong>
+                        </div>
+
+                        <div class="status-item">
+                            <span>Iceberg Model</span>
+                            <strong>
+                                Frozen
+                            </strong>
+                        </div>
+
+                        <div class="status-item">
+                            <span>Navigation Engine</span>
+                            <strong>
+                                Ready
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             SEA ICE PAGE
+        ==================================================== -->
+
+        <section
+            id="page-seaIce"
+            class="page"
+        >
+
+            <div class="page-grid">
+
+
+                <div class="control-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Sea-Ice Forecast
+                            </h3>
+
+                            <p>
+                                Historical initialization
+                            </p>
+
+                        </div>
+
+                        <span class="module-badge">
+                            Member 1
+                        </span>
+
+                    </div>
+
+
+                    <label>
+                        Initialization date
+
+                        <input
+                            id="seaIceDate"
+                            type="date"
+                            value="2025-12-28"
+                        >
+
+                    </label>
+
+
+                    <label>
+                        Visualization sampling
+
+                        <select id="seaIceSampleStep">
+
+                            <option value="4">
+                                High detail
+                            </option>
+
+                            <option
+                                value="6"
+                                selected
+                            >
+                                Balanced
+                            </option>
+
+                            <option value="8">
+                                Fast
+                            </option>
+
+                            <option value="10">
+                                Very fast
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <button
+                        id="runSeaIceBtn"
+                        class="primary-btn full"
+                    >
+                        <i class="fa-solid fa-snowflake"></i>
+                        Generate Sea-Ice Forecast
+                    </button>
+
+
+                    <div class="info-box">
+
+                        Forecasts are generated using four consecutive
+                        SIC observations and the frozen hybrid model.
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="result-panel">
+
+
+                    <div class="forecast-tabs">
+
+                        <button
+                            class="forecast-btn active"
+                            data-horizon="current"
+                        >
+                            Current
+                        </button>
+
+                        <button
+                            class="forecast-btn"
+                            data-horizon="24h"
+                        >
+                            +24h
+                        </button>
+
+                        <button
+                            class="forecast-btn"
+                            data-horizon="48h"
+                        >
+                            +48h
+                        </button>
+
+                        <button
+                            class="forecast-btn"
+                            data-horizon="72h"
+                        >
+                            +72h
+                        </button>
+
+                    </div>
+
+
+                    <div class="summary-strip">
+
+                        <div>
+                            <span>Horizon</span>
+                            <strong id="sicCurrentHorizon">
+                                Current
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Display cells</span>
+                            <strong id="sicCellCount">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Mean SIC</span>
+                            <strong id="sicMean">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Mean uncertainty</span>
+                            <strong id="sicUncertainty">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="seaIceMap"
+                        class="map-shell"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             ICEBERG PAGE
+        ==================================================== -->
+
+        <section
+            id="page-iceberg"
+            class="page"
+        >
+
+            <div class="page-grid">
+
+
+                <div class="control-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Iceberg Trajectory
+                            </h3>
+
+                            <p>
+                                Predict +24 / +48 / +72h
+                            </p>
+
+                        </div>
+
+                        <span class="module-badge">
+                            Member 2
+                        </span>
+
+                    </div>
+
+
+                    <label>
+                        Initialization date
+
+                        <input
+                            id="icebergDate"
+                            type="date"
+                            value="2025-12-28"
+                        >
+
+                    </label>
+
+
+                    <div class="coordinate-table">
+
+                        <div class="coord-header">
+                            <span>Time</span>
+                            <span>Latitude</span>
+                            <span>Longitude</span>
+                        </div>
+
+
+                        <div class="coord-row">
+
+                            <span>t-3</span>
+
+                            <input
+                                id="ibLat3"
+                                type="number"
+                                step="0.00001"
+                                value="-75.75435"
+                            >
+
+                            <input
+                                id="ibLon3"
+                                type="number"
+                                step="0.00001"
+                                value="-41.10950"
+                            >
+
+                        </div>
+
+
+                        <div class="coord-row">
+
+                            <span>t-2</span>
+
+                            <input
+                                id="ibLat2"
+                                type="number"
+                                step="0.00001"
+                                value="-75.69135"
+                            >
+
+                            <input
+                                id="ibLon2"
+                                type="number"
+                                step="0.00001"
+                                value="-41.09485"
+                            >
+
+                        </div>
+
+
+                        <div class="coord-row">
+
+                            <span>t-1</span>
+
+                            <input
+                                id="ibLat1"
+                                type="number"
+                                step="0.00001"
+                                value="-75.63525"
+                            >
+
+                            <input
+                                id="ibLon1"
+                                type="number"
+                                step="0.00001"
+                                value="-41.08170"
+                            >
+
+                        </div>
+
+
+                        <div class="coord-row">
+
+                            <span>Now</span>
+
+                            <input
+                                id="ibLat0"
+                                type="number"
+                                step="0.00001"
+                                value="-75.611"
+                            >
+
+                            <input
+                                id="ibLon0"
+                                type="number"
+                                step="0.00001"
+                                value="-41.076"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <label>
+                            Wind U
+
+                            <input
+                                id="ibWindU"
+                                type="number"
+                                step="0.1"
+                                value="-3"
+                            >
+                        </label>
+
+                        <label>
+                            Wind V
+
+                            <input
+                                id="ibWindV"
+                                type="number"
+                                step="0.1"
+                                value="2"
+                            >
+                        </label>
+
+                        <label>
+                            Ocean U
+
+                            <input
+                                id="ibOceanU"
+                                type="number"
+                                step="0.01"
+                                value="-0.05"
+                            >
+                        </label>
+
+                        <label>
+                            Ocean V
+
+                            <input
+                                id="ibOceanV"
+                                type="number"
+                                step="0.01"
+                                value="0.03"
+                            >
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        id="runIcebergBtn"
+                        class="primary-btn full"
+                    >
+                        <i class="fa-solid fa-mountain"></i>
+                        Predict Iceberg
+                    </button>
+
+                </div>
+
+
+
+                <div class="result-panel">
+
+                    <div class="summary-strip">
+
+                        <div>
+                            <span>+24h</span>
+                            <strong id="ib24Result">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>+48h</span>
+                            <strong id="ib48Result">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>+72h</span>
+                            <strong id="ib72Result">
+                                —
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="icebergMap"
+                        class="map-shell"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             RISK PAGE
+        ==================================================== -->
+
+        <section
+            id="page-risk"
+            class="page"
+        >
+
+            <div class="section-intro">
+
+                <div>
+
+                    <div class="eyebrow">
+                        DECISION INTELLIGENCE
+                    </div>
+
+                    <h2>
+                        Risk & Hazard Analysis
+                    </h2>
+
+                    <p>
+                        Combines sea-ice concentration,
+                        forecast uncertainty and iceberg proximity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="risk-grid">
+
+                <div class="risk-card">
+
+                    <div class="risk-title">
+                        Sea-Ice Risk
+                    </div>
+
+                    <div
+                        id="riskSicValue"
+                        class="risk-value"
+                    >
+                        —
+                    </div>
+
+                    <div class="risk-bar">
+                        <div
+                            id="riskSicBar"
+                            class="risk-fill"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-card">
+
+                    <div class="risk-title">
+                        Iceberg Proximity
+                    </div>
+
+                    <div
+                        id="riskIcebergValue"
+                        class="risk-value"
+                    >
+                        —
+                    </div>
+
+                    <div class="risk-bar">
+                        <div
+                            id="riskIcebergBar"
+                            class="risk-fill"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-card">
+
+                    <div class="risk-title">
+                        Forecast Uncertainty
+                    </div>
+
+                    <div
+                        id="riskUncertaintyValue"
+                        class="risk-value"
+                    >
+                        —
+                    </div>
+
+                    <div class="risk-bar">
+                        <div
+                            id="riskUncertaintyBar"
+                            class="risk-fill"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="risk-card emphasis">
+
+                    <div class="risk-title">
+                        Overall Hazard
+                    </div>
+
+                    <div
+                        id="overallRiskValue"
+                        class="risk-value"
+                    >
+                        NOT ANALYSED
+                    </div>
+
+                    <div
+                        id="overallRiskBadge"
+                        class="hazard-badge"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h3>
+                            Operational Alerts
+                        </h3>
+
+                        <p>
+                            Prototype navigation thresholds
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="hazardAlerts">
+
+                    <div class="empty-state">
+                        Run an Integrated Mission or Safe Route analysis.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             ROUTING PAGE
+        ==================================================== -->
+
+        <section
+            id="page-routing"
+            class="page"
+        >
+
+            <div class="page-grid">
+
+
+                <div class="control-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Safe Route Planning
+                            </h3>
+
+                            <p>
+                                A* navigation decision support
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label>
+                        Routing horizon
+
+                        <select id="routeHorizon">
+
+                            <option value="24h">
+                                +24h
+                            </option>
+
+                            <option value="48h">
+                                +48h
+                            </option>
+
+                            <option value="72h">
+                                +72h
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label>
+                        Vessel capability
+
+                        <select id="routeVessel">
+
+                            <option value="LOW">
+                                Low Ice Capability
+                            </option>
+
+                            <option
+                                value="MEDIUM"
+                                selected
+                            >
+                                Medium Ice Capability
+                            </option>
+
+                            <option value="HIGH">
+                                High Ice Capability
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label>
+                        Iceberg safety radius
+
+                        <div class="range-row">
+
+                            <input
+                                id="routeSafetyRadius"
+                                type="range"
+                                min="2"
+                                max="25"
+                                value="10"
+                            >
+
+                            <strong id="routeSafetyValue">
+                                10 km
+                            </strong>
+
+                        </div>
+
+                    </label>
+
+
+                    <div class="form-grid">
+
+                        <label>
+                            Start latitude
+
+                            <input
+                                id="routeStartLat"
+                                type="number"
+                                step="0.01"
+                                value="-72.5"
+                            >
+                        </label>
+
+                        <label>
+                            Start longitude
+
+                            <input
+                                id="routeStartLon"
+                                type="number"
+                                step="0.01"
+                                value="-50"
+                            >
+                        </label>
+
+                        <label>
+                            Destination latitude
+
+                            <input
+                                id="routeDestLat"
+                                type="number"
+                                step="0.01"
+                                value="-70.5"
+                            >
+                        </label>
+
+                        <label>
+                            Destination longitude
+
+                            <input
+                                id="routeDestLon"
+                                type="number"
+                                step="0.01"
+                                value="-35"
+                            >
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        id="runRouteBtn"
+                        class="primary-btn full"
+                    >
+                        <i class="fa-solid fa-route"></i>
+                        Plan Safe Route
+                    </button>
+
+
+                    <div class="warning-box">
+
+                        Prototype capability profiles are not
+                        official Polar Class certifications.
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="result-panel">
+
+
+                    <div class="route-comparison">
+
+                        <div class="route-card recommended">
+
+                            <span>
+                                Recommended
+                            </span>
+
+                            <strong id="recommendedDistance">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="route-card alternative">
+
+                            <span>
+                                Alternative
+                            </span>
+
+                            <strong id="alternativeDistance">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="route-card">
+
+                            <span>
+                                Route overlap
+                            </span>
+
+                            <strong id="routeOverlap">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="routingMap"
+                        class="map-shell"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             MISSION PAGE
+        ==================================================== -->
+
+        <section
+            id="page-mission"
+            class="page"
+        >
+
+            <div class="mission-layout">
+
+
+                <div class="mission-controls">
+
+                    <div class="section-intro">
+
+                        <div>
+
+                            <div class="eyebrow">
+                                COMPLETE PIPELINE
+                            </div>
+
+                            <h2>
+                                Integrated PolarGuard Mission
+                            </h2>
+
+                            <p>
+                                Member 1 → Member 2 → Risk →
+                                Vessel constraints → A* → Hazard intelligence
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+
+                        <div class="form-grid three">
+
+                            <label>
+                                Initialization
+
+                                <input
+                                    id="missionDate"
+                                    type="date"
+                                    value="2025-12-28"
+                                >
+                            </label>
+
+
+                            <label>
+                                Routing horizon
+
+                                <select id="missionHorizon">
+
+                                    <option value="24h">
+                                        +24h
+                                    </option>
+
+                                    <option value="48h">
+                                        +48h
+                                    </option>
+
+                                    <option value="72h">
+                                        +72h
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+
+                            <label>
+                                Vessel
+
+                                <select id="missionVessel">
+
+                                    <option value="LOW">
+                                        Low
+                                    </option>
+
+                                    <option
+                                        value="MEDIUM"
+                                        selected
+                                    >
+                                        Medium
+                                    </option>
+
+                                    <option value="HIGH">
+                                        High
+                                    </option>
+
+                                </select>
+
+                            </label>
+
+                        </div>
+
+
+
+                        <h4>
+                            Iceberg history
+                        </h4>
+
+
+                        <div class="coordinate-table">
+
+                            <div class="coord-header">
+
+                                <span>Time</span>
+                                <span>Latitude</span>
+                                <span>Longitude</span>
+
+                            </div>
+
+
+                            <div class="coord-row">
+
+                                <span>t-3</span>
+
+                                <input
+                                    id="mLat3"
+                                    value="-75.75435"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                                <input
+                                    id="mLon3"
+                                    value="-41.10950"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                            </div>
+
+
+                            <div class="coord-row">
+
+                                <span>t-2</span>
+
+                                <input
+                                    id="mLat2"
+                                    value="-75.69135"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                                <input
+                                    id="mLon2"
+                                    value="-41.09485"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                            </div>
+
+
+                            <div class="coord-row">
+
+                                <span>t-1</span>
+
+                                <input
+                                    id="mLat1"
+                                    value="-75.63525"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                                <input
+                                    id="mLon1"
+                                    value="-41.08170"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                            </div>
+
+
+                            <div class="coord-row">
+
+                                <span>Now</span>
+
+                                <input
+                                    id="mLat0"
+                                    value="-75.611"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                                <input
+                                    id="mLon0"
+                                    value="-41.076"
+                                    type="number"
+                                    step="0.00001"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <h4>
+                            Environmental forcing
+                        </h4>
+
+
+                        <div class="form-grid">
+
+                            <label>
+                                Wind U
+
+                                <input
+                                    id="mWindU"
+                                    value="-3"
+                                    type="number"
+                                    step="0.1"
+                                >
+                            </label>
+
+                            <label>
+                                Wind V
+
+                                <input
+                                    id="mWindV"
+                                    value="2"
+                                    type="number"
+                                    step="0.1"
+                                >
+                            </label>
+
+                            <label>
+                                Ocean U
+
+                                <input
+                                    id="mOceanU"
+                                    value="-0.05"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                            <label>
+                                Ocean V
+
+                                <input
+                                    id="mOceanV"
+                                    value="0.03"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                        </div>
+
+
+
+                        <h4>
+                            Vessel navigation
+                        </h4>
+
+
+                        <div class="form-grid">
+
+                            <label>
+                                Start latitude
+
+                                <input
+                                    id="mStartLat"
+                                    value="-72.5"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                            <label>
+                                Start longitude
+
+                                <input
+                                    id="mStartLon"
+                                    value="-50"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                            <label>
+                                Destination latitude
+
+                                <input
+                                    id="mDestLat"
+                                    value="-70.5"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                            <label>
+                                Destination longitude
+
+                                <input
+                                    id="mDestLon"
+                                    value="-35"
+                                    type="number"
+                                    step="0.01"
+                                >
+                            </label>
+
+                        </div>
+
+
+                        <label>
+                            Iceberg safety radius
+
+                            <div class="range-row">
+
+                                <input
+                                    id="mSafetyRadius"
+                                    type="range"
+                                    min="2"
+                                    max="25"
+                                    value="10"
+                                >
+
+                                <strong id="mSafetyValue">
+                                    10 km
+                                </strong>
+
+                            </div>
+
+                        </label>
+
+
+                        <button
+                            id="runMissionBtn"
+                            class="primary-btn full large"
+                        >
+                            <i class="fa-solid fa-crosshairs"></i>
+                            RUN POLARGUARD
+                        </button>
+
+
+                        <div
+                            id="missionStatus"
+                            class="mission-status"
+                        >
+                            Ready
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="mission-results">
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <h3>
+                                    Mission Decision
+                                </h3>
+
+                                <p>
+                                    AI-assisted navigation summary
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="decision-grid">
+
+                            <div>
+                                <span>Route status</span>
+                                <strong id="missionRouteStatus">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Recommended</span>
+                                <strong id="missionRecommendedDistance">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Alternative</span>
+                                <strong id="missionAlternativeDistance">
+                                    —
+                                </strong>
+                            </div>
+
+                            <div>
+                                <span>Hazard</span>
+                                <strong id="missionHazard">
+                                    —
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="missionMap"
+                        class="map-shell tall"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ===================================================
+             3D OPERATIONS PAGE
+        ==================================================== -->
+
+        <section
+            id="page-operations"
+            class="page operations-page"
+        >
+
+
+            <div id="operationsToolbar">
+
+                <div class="forecast-tabs">
+
+                    <button
+                        class="ops-horizon active"
+                        data-horizon="current"
+                    >
+                        Current
+                    </button>
+
+                    <button
+                        class="ops-horizon"
+                        data-horizon="24h"
+                    >
+                        +24h
+                    </button>
+
+                    <button
+                        class="ops-horizon"
+                        data-horizon="48h"
+                    >
+                        +48h
+                    </button>
+
+                    <button
+                        class="ops-horizon"
+                        data-horizon="72h"
+                    >
+                        +72h
+                    </button>
+
+                </div>
+
+
+                <div class="layer-switches">
+
+                    <label>
+                        <input
+                            id="layerSic"
+                            type="checkbox"
+                            checked
+                        >
+                        Sea Ice
+                    </label>
+
+                    <label>
+                        <input
+                            id="layerUncertainty"
+                            type="checkbox"
+                            checked
+                        >
+                        Uncertainty
+                    </label>
+
+                    <label>
+                        <input
+                            id="layerIceberg"
+                            type="checkbox"
+                            checked
+                        >
+                        Iceberg
+                    </label>
+
+                    <label>
+                        <input
+                            id="layerRoutes"
+                            type="checkbox"
+                            checked
+                        >
+                        Routes
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div id="operationsCesium"></div>
+
+
+            <div id="operationsHud">
+
+                <div class="hud-title">
+                    POLARGUARD LIVE VIEW
+                </div>
+
+                <div class="hud-row">
+                    <span>Frame</span>
+                    <strong id="hudFrame">
+                        Current
+                    </strong>
+                </div>
+
+                <div class="hud-row">
+                    <span>Sea Ice</span>
+                    <strong id="hudSic">
+                        —
+                    </strong>
+                </div>
+
+                <div class="hud-row">
+                    <span>Iceberg</span>
+                    <strong id="hudIceberg">
+                        —
+                    </strong>
+                </div>
+
+                <div class="hud-row">
+                    <span>Route</span>
+                    <strong id="hudRoute">
+                        —
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     TOASTS
+========================================================== -->
+
+<div id="toastContainer"></div>
+
+
+
+<script
+    src="https://unpkg.com/cesium@1.121/Build/Cesium/Cesium.js"
+></script>
+
+<script src="app.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolarGuard 3D Navigation</title>
+
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.132/Build/Cesium/Cesium.js"></script>
+  <link
+    href="https://cesium.com/downloads/cesiumjs/releases/1.132/Build/Cesium/Widgets/widgets.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <div id="app-shell">
+
+    <header class="topbar">
+      <div>
+        <h1>🧊 PolarGuard</h1>
+        <p>Antarctic Sea-Ice, Iceberg & Navigation Decision Support</p>
+      </div>
+
+      <div class="status-strip">
+        <span id="apiStatus" class="status-pill status-offline">
+          API Offline
+        </span>
+        <span class="status-pill">
+          Prototype Decision Support
+        </span>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Forecast Horizon</h2>
+
+        <div class="segmented">
+          <button class="horizon-btn active" data-horizon="current">
+            Current
+          </button>
+          <button class="horizon-btn" data-horizon="24h">
+            +24h
+          </button>
+          <button class="horizon-btn" data-horizon="48h">
+            +48h
+          </button>
+          <button class="horizon-btn" data-horizon="72h">
+            +72h
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Layers</h2>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="showRecommended" checked />
+          <span class="legend-line recommended"></span>
+          Recommended Route
+        </label>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="showAlternative" checked />
+          <span class="legend-line alternative"></span>
+          Alternative Route
+        </label>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="showIceberg" checked />
+          <span class="legend-dot iceberg"></span>
+          Iceberg Forecast
+        </label>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="showHazards" checked />
+          <span class="legend-box hazard"></span>
+          Hazard Zones
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>Route Data</h2>
+
+        <label class="upload-label">
+          Recommended GeoJSON
+          <input
+            type="file"
+            id="recommendedFile"
+            accept=".geojson,.json"
+          />
+        </label>
+
+        <label class="upload-label">
+          Alternative GeoJSON
+          <input
+            type="file"
+            id="alternativeFile"
+            accept=".geojson,.json"
+          />
+        </label>
+
+        <button id="clearRoutesBtn" class="secondary-btn">
+          Clear Routes
+        </button>
+      </section>
+
+      <section class="panel">
+        <h2>Backend</h2>
+
+        <button id="connectApiBtn" class="primary-btn">
+          Check PolarGuard API
+        </button>
+
+        <div id="modelStatus" class="mini-status">
+          Models not checked yet.
+        </div>
+      </section>
+
+      <section class="panel disclaimer">
+        <strong>Important</strong>
+        <p>
+          PolarGuard is a prototype decision-support system.
+          It is not certified for operational vessel navigation.
+        </p>
+      </section>
+    </aside>
+
+    <main class="main">
+      <div id="cesiumContainer"></div>
+
+      <div class="hud top-left">
+        <div class="hud-title">Current View</div>
+        <div id="currentHorizon">Current</div>
+      </div>
+
+      <div class="hud bottom-center">
+        <button id="resetViewBtn">Reset Antarctic View</button>
+        <button id="fitRoutesBtn">Fit Routes</button>
+      </div>
+    </main>
+
+    <aside class="rightbar">
+      <section class="panel">
+        <h2>Decision Summary</h2>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <span>Recommended</span>
+            <strong id="recommendedDistance">—</strong>
+          </div>
+
+          <div class="metric">
+            <span>Alternative</span>
+            <strong id="alternativeDistance">—</strong>
+          </div>
+
+          <div class="metric">
+            <span>Overlap</span>
+            <strong id="routeOverlap">—</strong>
+          </div>
+
+          <div class="metric">
+            <span>Horizon</span>
+            <strong id="summaryHorizon">Current</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Route Comparison</h2>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Recommended</th>
+              <th>Alternative</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Distance</td>
+              <td id="cmpRecDistance">—</td>
+              <td id="cmpAltDistance">—</td>
+            </tr>
+            <tr>
+              <td>Max SIC</td>
+              <td id="cmpRecSic">—</td>
+              <td id="cmpAltSic">—</td>
+            </tr>
+            <tr>
+              <td>Iceberg Risk</td>
+              <td id="cmpRecIceberg">—</td>
+              <td id="cmpAltIceberg">—</td>
+            </tr>
+            <tr>
+              <td>Uncertainty Risk</td>
+              <td id="cmpRecUncertainty">—</td>
+              <td id="cmpAltUncertainty">—</td>
+            </tr>
+            <tr>
+              <td>Hazard Level</td>
+              <td id="cmpRecHazard">—</td>
+              <td id="cmpAltHazard">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>Operational Alerts</h2>
+
+        <div id="alerts">
+          <div class="alert info">
+            Load route exports from Streamlit to begin.
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

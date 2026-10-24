@@ -1,0 +1,78 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.venv/
+
+# =========================
+# VS Code / Jupyter
+# =========================
+.vscode/
+.ipynb_checkpoints/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Large raw / processed data
+# =========================
+data/
+iceberg/data/
+
+# =========================
+# Generated outputs
+# =========================
+outputs/
+iceberg/outputs/
+
+# =========================
+# Backup / temporary copies
+# =========================
+backup_before_full_integration/
+*_before_*.py
+*_backup*.py
+*.bak
+*.tmp
+*.log
+
+# =========================
+# NetCDF / GRIB / large scientific files
+# =========================
+*.nc
+*.nc4
+*.grib
+*.grib2
+*.h5
+*.hdf5
+
+# =========================
+# Local AIS / uploaded data
+# =========================
+upload_test/
+ps124_validation_maps/
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Local credentials and runtime cache
+.streamlit/secrets.toml
+data/satellite_cache/
+data/environment_cache/
+__pycache__/
+*.py[cod]
